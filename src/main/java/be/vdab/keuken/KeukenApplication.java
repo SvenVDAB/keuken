@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class KeukenApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(KeukenApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(KeukenApplication.class, args);
+    }
 
 }
