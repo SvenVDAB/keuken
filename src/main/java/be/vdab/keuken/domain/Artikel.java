@@ -3,6 +3,7 @@ package be.vdab.keuken.domain;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 @Entity
 @Table(name = "artikels")
@@ -39,4 +40,10 @@ public class Artikel {
         return verkoopprijs;
     }
 
+    public void verhoogVerkoopprijs(BigDecimal bedrag) {
+        if (bedrag.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new IllegalArgumentException();
+        }
+        verkoopprijs = verkoopprijs.add(bedrag).setScale(2, RoundingMode.HALF_UP);
+    }
 }

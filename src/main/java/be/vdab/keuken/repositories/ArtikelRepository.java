@@ -8,6 +8,7 @@ import java.util.Optional;
 
 @Repository
 public class ArtikelRepository {
+
     private final EntityManager manager;
 
     public ArtikelRepository(EntityManager manager) {
