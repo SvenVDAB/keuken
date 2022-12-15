@@ -4,6 +4,7 @@ import be.vdab.keuken.domain.Artikel;
 import jakarta.persistence.EntityManager;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,5 +29,11 @@ public class ArtikelRepository {
         return manager.createNamedQuery("Artikel.findByNaamContains", Artikel.class)
                 .setParameter("woord", '%' + woord + '%')
                 .getResultList();
+    }
+
+    public int verhoogAlleVerkoopPrijzen(BigDecimal prijsverhoging) {
+        return manager.createNamedQuery("Artikel.verhoogAlleVerkoopPrijzen")
+                .setParameter("prijsverhoging", prijsverhoging)
+                .executeUpdate();
     }
 }

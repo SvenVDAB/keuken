@@ -66,4 +66,13 @@ public class ArtikelRepositoryTest extends AbstractTransactionalJUnit4SpringCont
                 .extracting(Artikel::getNaam)
                 .isSortedAccordingTo(String::compareToIgnoreCase);
     }
+
+    @Test
+    void verhoogAlleVerkoopPrijzen() {
+        assertThat(repository.verhoogAlleVerkoopPrijzen(BigDecimal.TEN))
+                .isEqualTo(countRowsInTable(ARTIKELS));
+        assertThat(countRowsInTableWhere(ARTIKELS,
+                "verkoopprijs = 130 and id = " + idVanTestArtikel()))
+                .isOne();
+    }
 }
