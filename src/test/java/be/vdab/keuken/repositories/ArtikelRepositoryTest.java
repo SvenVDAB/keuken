@@ -55,4 +55,15 @@ public class ArtikelRepositoryTest extends AbstractTransactionalJUnit4SpringCont
         assertThat(countRowsInTableWhere(ARTIKELS,
                 "id=" + artikel.getId())).isOne();
     }
+
+    @Test
+    void findByNaamContains() {
+        var artikels = repository.findByNaamContains("es");
+        assertThat(artikels)
+                .hasSize(countRowsInTableWhere(ARTIKELS, "naam like '%es%'"))
+                .allSatisfy(
+                        artikel -> assertThat(artikel.getNaam()).containsIgnoringCase("es"))
+                .extracting(Artikel::getNaam)
+                .isSortedAccordingTo(String::compareToIgnoreCase);
+    }
 }
