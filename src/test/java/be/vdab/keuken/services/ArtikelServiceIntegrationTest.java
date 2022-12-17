@@ -25,17 +25,27 @@ class ArtikelServiceIntegrationTest extends AbstractTransactionalJUnit4SpringCon
         this.manager = manager;
     }
 
-    private long idVanTestArtikel() {
+    private long idVanTestFoodArtikel() {
         return jdbcTemplate.queryForObject(
-                "select id from artikels where naam = 'test'", Long.class
+                "select id from artikels where naam = 'testFood'", Long.class
+        );
+    }
+
+    private long idVanTestNonFoodArtikel() {
+        return jdbcTemplate.queryForObject(
+                "select id from artikels where naam = 'testNonFood'", Long.class
         );
     }
 
     @Test
     void verhoogVerkoopprijs() {
-        var id = idVanTestArtikel();
+        var id = idVanTestFoodArtikel();
         service.verhoogVerkoopprijs(id, BigDecimal.TEN);
         manager.flush();
         assertThat(countRowsInTableWhere(ARTIKELS, "verkoopprijs = 130 and id = " + id)).isOne();
+        id = idVanTestNonFoodArtikel();
+        service.verhoogVerkoopprijs(id, BigDecimal.TEN);
+        manager.flush();
+        assertThat(countRowsInTableWhere(ARTIKELS, "verkoopprijs = 150 and id = " + id)).isOne();
     }
 }
