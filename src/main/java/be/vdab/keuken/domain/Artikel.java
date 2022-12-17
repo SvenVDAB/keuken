@@ -6,8 +6,10 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 @Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Table(name = "artikels")
-public class Artikel {
+@DiscriminatorColumn(name = "soort")
+public abstract class Artikel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
