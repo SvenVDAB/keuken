@@ -2,6 +2,7 @@ package be.vdab.keuken.repositories;
 
 import be.vdab.keuken.domain.Artikel;
 import be.vdab.keuken.domain.FoodArtikel;
+import be.vdab.keuken.domain.Korting;
 import be.vdab.keuken.domain.NonFoodArtikel;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -98,5 +99,19 @@ public class ArtikelRepositoryTest extends AbstractTransactionalJUnit4SpringCont
         assertThat(countRowsInTableWhere(ARTIKELS,
                 "verkoopprijs = 150 and id = " + idVanTestNonFoodArtikel()))
                 .isOne();
+    }
+
+    @Test
+    void kortingenLezen() {
+        assertThat(repository.findById(idVanTestFoodArtikel()))
+                .hasValueSatisfying(
+                        artikel -> assertThat(artikel.getKortingen())
+                                .containsOnly(new Korting(10, BigDecimal.valueOf(5)))
+                );
+        assertThat(repository.findById(idVanTestNonFoodArtikel()))
+                .hasValueSatisfying(
+                        artikel -> assertThat(artikel.getKortingen())
+                                .containsOnly(new Korting(50, BigDecimal.valueOf(10)))
+                );
     }
 }
