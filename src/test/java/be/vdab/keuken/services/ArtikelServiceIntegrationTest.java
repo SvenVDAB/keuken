@@ -14,7 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest(showSql = false)
 @Import({ArtikelService.class, ArtikelRepository.class})
-@Sql("/insertArtikel.sql")
+@Sql({"/insertArtikelgroep.sql", "/insertArtikel.sql"})
 class ArtikelServiceIntegrationTest extends AbstractTransactionalJUnit4SpringContextTests {
     private final static String ARTIKELS = "artikels";
     private final ArtikelService service;

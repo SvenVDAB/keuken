@@ -1,6 +1,7 @@
 package be.vdab.keuken.services;
 
 import be.vdab.keuken.domain.Artikel;
+import be.vdab.keuken.domain.Artikelgroep;
 import be.vdab.keuken.domain.FoodArtikel;
 import be.vdab.keuken.exceptions.ArtikelNietGevondenException;
 import be.vdab.keuken.repositories.ArtikelRepository;
@@ -28,7 +29,8 @@ public class ArtikelServiceTest {
     @BeforeEach
     void beforeEach() {
         service = new ArtikelService(repository);
-        artikel = new FoodArtikel("test", BigDecimal.ONE, BigDecimal.TEN, 7);
+        artikel = new FoodArtikel("test", BigDecimal.ONE, BigDecimal.TEN,
+                new Artikelgroep("test"), 7);
     }
 
     @Test

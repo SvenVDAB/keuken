@@ -13,8 +13,9 @@ public class FoodArtikel extends Artikel {
     protected FoodArtikel() {
     }
 
-    public FoodArtikel(String naam, BigDecimal aankoopprijs, BigDecimal verkoopprijs, int houdbaarheid) {
-        super(naam, aankoopprijs, verkoopprijs);
+    public FoodArtikel(String naam, BigDecimal aankoopprijs, BigDecimal verkoopprijs,
+                       Artikelgroep artikelGroep, int houdbaarheid) {
+        super(naam, aankoopprijs, verkoopprijs, artikelGroep);
         this.houdbaarheid = houdbaarheid;
     }
 

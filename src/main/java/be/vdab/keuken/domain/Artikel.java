@@ -26,14 +26,21 @@ public abstract class Artikel {
     @OrderBy("vanafAantal")
     private Set<Korting> kortingen;
 
-    public Artikel(String naam, BigDecimal aankoopprijs, BigDecimal verkoopprijs) {
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "artikelgroepId")
+    private Artikelgroep artikelgroep;
+
+    protected Artikel() {
+    }
+
+    public Artikel(String naam, BigDecimal aankoopprijs, BigDecimal verkoopprijs, Artikelgroep artikelgroep) {
         this.naam = naam;
         this.aankoopprijs = aankoopprijs;
         this.verkoopprijs = verkoopprijs;
         this.kortingen = new LinkedHashSet<>();
-    }
-
-    protected Artikel() {
+        if (artikelgroep != null) {
+            setArtikelgroep(artikelgroep);
+        }
     }
 
     public long getId() {
@@ -61,5 +68,26 @@ public abstract class Artikel {
             throw new IllegalArgumentException();
         }
         verkoopprijs = verkoopprijs.add(bedrag).setScale(2, RoundingMode.HALF_UP);
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        return object instanceof Artikel artikel &&
+                naam.equalsIgnoreCase(artikel.getNaam());
+    }
+    @Override
+    public int hashCode() {
+        return naam == null ? 0 : naam.toLowerCase().hashCode();
+    }
+
+    public Artikelgroep getArtikelgroep() {
+        return artikelgroep;
+    }
+
+    public void setArtikelgroep(Artikelgroep artikelgroep) {
+        if (!artikelgroep.getArtikels().contains(this)) {
+            artikelgroep.add(this);
+        }
+        this.artikelgroep = artikelgroep;
     }
 }
