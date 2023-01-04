@@ -28,6 +28,7 @@ public class ArtikelRepository {
     public List<Artikel> findByNaamContains(String woord) {
         return manager.createNamedQuery("Artikel.findByNaamContains", Artikel.class)
                 .setParameter("woord", '%' + woord + '%')
+                .setHint("javax.persistence.loadgraph", manager.createEntityGraph(Artikel.MET_ARTIKELGROEP))
                 .getResultList();
     }
 

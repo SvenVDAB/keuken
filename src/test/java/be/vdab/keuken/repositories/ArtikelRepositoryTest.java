@@ -98,6 +98,13 @@ public class ArtikelRepositoryTest extends AbstractTransactionalJUnit4SpringCont
                         artikel -> assertThat(artikel.getNaam()).containsIgnoringCase("es"))
                 .extracting(Artikel::getNaam)
                 .isSortedAccordingTo(String::compareToIgnoreCase);
+        System.out.println("\ntest findByNaamContains part 2");
+        artikels = repository.findByNaamContains("");
+        manager.clear();
+        assertThat(artikels)
+                .extracting(Artikel::getArtikelgroep)
+                .extracting(Artikelgroep::getNaam)
+                .isNotNull();
     }
 
     @Test
